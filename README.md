@@ -1,2 +1,2 @@
 # 2XC3-Final-Project
-Vik, Peter, Franklin
+This is the final group project for 2XC3.
