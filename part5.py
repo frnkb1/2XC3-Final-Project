@@ -181,14 +181,19 @@ def experiment():
         heuristic_for_all_goal[key]= heuristic(stations_data, key)
 
     a_star_run_array = []
+    a_star_each_run_arry = []
     dijkstra_run_array = []
+    dijkstra_each_run_arry  = []
 
     A_star_start = timeit.default_timer()
     for src in stations_data:
         for dst in stations_data:
             if src != dst:
+                each_start = timeit.default_timer()
                 run = A_star(london_subway_graph, src, dst, heuristic_for_all_goal[dst])
-                a_star_run_array.append(timeit.default_timer() - A_star_start)
+                each_end = timeit.default_timer()
+                a_star_each_run_arry.append(each_end-each_start)
+                a_star_run_array.append(each_end - A_star_start)
     A_star_end = timeit.default_timer()
     a_star_run_array.append(timeit.default_timer() -  A_star_start)
 
@@ -196,8 +201,11 @@ def experiment():
     for src in stations_data:
         for dst in stations_data:
             if src != dst:
+                each_start = timeit.default_timer()
                 run = dijkstra(london_subway_graph, src)
-                dijkstra_run_array.append(timeit.default_timer() - dijkstra_start)
+                each_end = timeit.default_timer()
+                dijkstra_each_run_arry.append(each_end-each_start)
+                dijkstra_run_array.append(each_end - dijkstra_start)
     dijkstra_end = timeit.default_timer()
     dijkstra_run_array.append(timeit.default_timer() - dijkstra_start)
 
@@ -209,71 +217,27 @@ def experiment():
     plt.plot(dijkstra_run_array, label="Dijkstra's")
     plt.xlabel('Number of Paths Calculated')
     plt.ylabel('Time (seconds)')
-    plt.title("Performance Comparison: A* vs Dijkstra's")
+    plt.title("Aggregate Performance Comparison: A* vs Dijkstra's")
     plt.legend()
     plt.show()
 
+    
+    plt.figure(figsize=(30, 6))  # Set a wider figure: 16 inches wide, 6 inches tall
 
+    # Plot both arrays as lines
+    plt.plot(a_star_each_run_arry, label='A*', linestyle='-', marker='')  
+    plt.plot(dijkstra_each_run_arry, label="Dijkstra's", linestyle='-', marker='')
 
-
-
-
-
-def experiment2():
-    connections_csv = 'london_connections.csv'
-    stations_csv = 'london_stations.csv'
-
-    stations_data = get_stations_data(stations_csv)
-    london_subway_graph = Graph(1000)
-    add_edges_from_csv(london_subway_graph, connections_csv, stations_data)
-
-    heuristic_for_all_goal = {key: heuristic(stations_data, key) for key in stations_data}
-
-    # A* timing
-    a_star_times = []
-    a_star_path_counts = 0
-    a_star_cumulative_time = []
-    a_star_cumulative_paths = []
-
-    A_star_start = timeit.default_timer()
-    for src in stations_data:
-        for dst in stations_data:
-            if src != dst:
-                path_start = timeit.default_timer()
-                A_star(london_subway_graph, src, dst, heuristic_for_all_goal[dst])
-                path_end = timeit.default_timer()
-                a_star_times.append(path_end - path_start)
-                a_star_path_counts += 1
-                a_star_cumulative_time.append(path_end - A_star_start)
-                a_star_cumulative_paths.append(a_star_path_counts)
-
-    # Dijkstra's timing
-    dijkstra_times = []
-    dijkstra_path_counts = 0
-    dijkstra_cumulative_time = []
-    dijkstra_cumulative_paths = []
-
-    dijkstra_start = timeit.default_timer()
-    for src in stations_data:
-        src_start = timeit.default_timer()
-        distances, paths = dijkstra(london_subway_graph, src)
-        src_end = timeit.default_timer()
-        time_taken = src_end - src_start
-        num_paths = len([dst for dst in stations_data if dst != src])
-        dijkstra_times.extend([time_taken / num_paths] * num_paths)  # Distribute time per path
-        dijkstra_path_counts += num_paths
-        dijkstra_cumulative_time.extend([src_end - dijkstra_start] * num_paths)
-        dijkstra_cumulative_paths.extend(range(dijkstra_path_counts - num_paths + 1, dijkstra_path_counts + 1))
-
-    # Plotting
-    plt.figure(figsize=(10, 6))
-    plt.plot(a_star_cumulative_paths, a_star_cumulative_time, label='A* Algorithm')
-    plt.plot(dijkstra_cumulative_paths, dijkstra_cumulative_time, label='Dijkstra Algorithm', alpha=0.7)
-    plt.xlabel('Number of Paths Computed')
-    plt.ylabel('Cumulative Time (seconds)')
-    plt.title('Performance Comparison: A* vs Dijkstra Algorithms')
+    # Add axis labels and title
+    plt.xlabel('Iteration')
+    plt.ylabel('Time')
+    plt.title("Performance Comparison Per Iteration: A* vs Dijkstra's")
     plt.legend()
-    plt.grid(True)
-    plt.show()
 
-experiment2()
+    # Display the plot
+    plt.show()
+    
+
+
+
+experiment()
