@@ -152,17 +152,17 @@ def create_random_graph(num_nodes, num_edges, max_weight):
             weight = np.random.randint(1, max_weight + 1)
             graph.add_edge(node1, node2, weight)
             edges.add((node1, node2))
-
     return graph
 
-def experiment_accuracy(trials):
+def experiment_accuracy(trials, k, nodes=100, edges=200, max_weight=10):
     bellman_ford_accuracies = []
     djikstra_accuracies = []
     for _ in range(trials):
         
-        test_graph = create_random_graph(100, 200, 10)
+        graph = create_random_graph(100, 200, 10)
         source = np.random.randint(0, 100)
-        k = np.random.randint(1, 10)
+        
+        test_graph = deepcopy(graph)
         
         djikstra_distances, djikstra_paths = dijkstra(test_graph, source, k)
         bellman_ford_distances, bellman_ford_paths = bellman_ford(test_graph, source, k)
@@ -173,20 +173,97 @@ def experiment_accuracy(trials):
         if classical_djikstra_distances == djikstra_distances:
             djikstra_accuracies.append(1)
         else:
-            bellman_ford_accuracies.append(0)
+            djikstra_accuracies.append(0)
         
         if classical_bellman_ford_distances == bellman_ford_distances:
             bellman_ford_accuracies.append(1)
         else:
             bellman_ford_accuracies.append(0)
+        
     return bellman_ford_accuracies, djikstra_accuracies
 
-def experiment_performance_time(trials):
-    return 0
+def experiment_performance_time(trials, k, nodes=100, edges=200, max_weight=10):
+    bellman_ford_times = []
+    djikstra_times = []
+    bellman_ford_classical_times = []
+    djikstra_classical_times = []
+    
+    for _ in range(trials):
+        graph = create_random_graph(nodes, edges, max_weight)
+        test_graph = deepcopy(graph)
+        source = np.random.randint(0, 100)
+        
+        start = timeit.default_timer()
+        bellman_ford(test_graph, source, k)
+        end = timeit.default_timer()
+        bellman_ford_times.append(end - start)
+        
+        start = timeit.default_timer()
+        dijkstra(test_graph, source, k)
+        end = timeit.default_timer()
+        djikstra_times.append(end - start)
+        
+        start = timeit.default_timer()
+        bellman_ford_classical(test_graph, source)
+        end = timeit.default_timer()
+        bellman_ford_classical_times.append(end - start)
+        
+        start = timeit.default_timer()
+        djikstra_classical(test_graph, source)
+        end = timeit.default_timer()
+        djikstra_classical_times.append(end - start)
+        
+    return bellman_ford_times, djikstra_times, bellman_ford_classical_times, djikstra_classical_times
 
-def experiment_performance_memory(trials):
-    return 0
+def experiment_performance_memory(trials, k, nodes=100, edges=200, max_weight=10):
+    bellman_ford_memory = []
+    djikstra_memory = []
+    bellman_ford_classical_memory = []
+    djikstra_classical_memory = []
 
-bellman_accuracies, djikstra_accuracies = experiment_accuracy(10)
+    for _ in range(trials):
+        graph = create_random_graph(nodes, edges, max_weight)
+        test_graph = deepcopy(graph)
+        source = np.random.randint(0, 100)
+
+        tracemalloc.start()
+        bellman_ford(test_graph, source, k)
+        current, peak = tracemalloc.get_traced_memory()
+        bellman_ford_memory.append(peak)
+        tracemalloc.stop()
+        
+        tracemalloc.start()
+        dijkstra(test_graph, source, k)
+        current, peak = tracemalloc.get_traced_memory()
+        djikstra_memory.append(peak)
+        tracemalloc.stop()
+
+        tracemalloc.start()
+        bellman_ford_classical(test_graph, source)
+        current, peak = tracemalloc.get_traced_memory()
+        bellman_ford_classical_memory.append(peak)
+        tracemalloc.stop()
+
+        tracemalloc.start()
+        djikstra_classical(test_graph, source)
+        current, peak = tracemalloc.get_traced_memory()
+        djikstra_classical_memory.append(peak)
+        tracemalloc.stop()
+
+    return bellman_ford_memory, djikstra_memory, bellman_ford_classical_memory, djikstra_classical_memory
+
+bellman_accuracies, djikstra_accuracies = experiment_accuracy(10, 9)
 print(bellman_accuracies)
 print(djikstra_accuracies)
+
+bellman_ford_times, dijkstra_times, bellman_ford_classical_times, dijkstra_classical_times = experiment_performance_time(10, 5)
+print(np.mean(bellman_ford_times))
+print(np.mean(dijkstra_times))
+print(np.mean(bellman_ford_classical_times))
+print(np.mean(dijkstra_classical_times))
+
+bellman_ford_memory, dijkstra_memory, bellman_ford_classical_memory, dijkstra_classical_memory = experiment_performance_memory(10, 5)
+print(np.mean(bellman_ford_memory))
+print(np.mean(dijkstra_memory))
+print(np.mean(bellman_ford_classical_memory))
+print(np.mean(dijkstra_classical_memory))
