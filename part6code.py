@@ -1,6 +1,6 @@
 import heapq
 from abc import ABC, abstractmethod
-
+import math
 class SPAlgorithm(ABC):
     @abstractmethod
     def calc_sp(self, graph, source: int, dest: int) -> float:
@@ -82,6 +82,26 @@ class WeightedGraph(Graph):
             for node2 in self.graph[node1]:
                 total += self.weight[(node1, node2)]
         return total / 2
+
+"""Heuristics class"""
+class Heuristics(WeightedGraph):
+    def __init__(self,nodes=0):
+        super().__init__(nodes)  # Setup graph structure
+        self.heuristics = {}
+    @staticmethod
+    def euclidean_distance(lat1, lon1, lat2, lon2):
+        return math.sqrt((lat2 - lat1) ** 2 + (lon2 - lon1) ** 2)
+    def get_heurisitics(self,stations_data, goal):
+        goal_latitude = stations_data[goal][0]
+        goal_longitude = stations_data[goal][1]
+        h = {}
+        for sid, values in stations_data.items():
+            h[sid] = self.euclidean_distance(lon1=goal_longitude, lat1=goal_latitude, lon2=values[1], lat2=values[0])
+        return h
+
+
+
+
 
 
 
