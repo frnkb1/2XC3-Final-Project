@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1744248218.33272 "g:/My Drive/Compsci/School/CS2XC3/Final Project/2XC3-Final-Project/main.tex" "main.pdf" "main" 1744248219.37188 0
+["pdflatex"] 1744249669.08386 "g:/My Drive/Compsci/School/CS2XC3/Final Project/2XC3-Final-Project/main.tex" "main.pdf" "main" 1744249670.06577 0
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/tcrm1200.tfm" 993062508 1444 95ffe0f19b974d50849790c8225c7ef7 ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -100,11 +100,11 @@
   "Figures/Performance_densities.png" 1744244385 35286 0b6b6d52a76e212861e5b3931cf5b137 ""
   "Figures/Performance_kvals.png" 1744244344 31403 b540ae3933e402d3b56810f48ad239fd ""
   "Figures/Performance_sizes.png" 1744244370 31948 f6faefd4da1ac2b173bcc8121f0bcaa7 ""
-  "g:/My Drive/Compsci/School/CS2XC3/Final Project/2XC3-Final-Project/main.tex" 1744248216 22627 6e1df7d9aced4a29bbbc213886e282ad ""
-  "main.aux" 1744248219 4269 5590f339dab1006eb7d50ee766ead5ef "pdflatex"
-  "main.out" 1744248219 1381 2340a155ba7315a8aab68097b2247a69 "pdflatex"
-  "main.tex" 1744248216 22627 6e1df7d9aced4a29bbbc213886e282ad ""
-  "main.toc" 1744248219 595 9a8616655f8606b6b9f18502ef338a3f "pdflatex"
+  "g:/My Drive/Compsci/School/CS2XC3/Final Project/2XC3-Final-Project/main.tex" 1744249667 22701 b3a147ca2aa58b5d4b58318d208b0cdc ""
+  "main.aux" 1744249669 4269 5590f339dab1006eb7d50ee766ead5ef "pdflatex"
+  "main.out" 1744249669 1381 2340a155ba7315a8aab68097b2247a69 "pdflatex"
+  "main.tex" 1744249667 22701 b3a147ca2aa58b5d4b58318d208b0cdc ""
+  "main.toc" 1744249669 595 9a8616655f8606b6b9f18502ef338a3f "pdflatex"
   (generated)
   "main.aux"
   "main.log"
