@@ -5,6 +5,7 @@ import timeit
 import tracemalloc
 from copy import deepcopy
 import matplotlib.pyplot as plt
+import heapq
 
 ## Weighted Graph Class
 class WeightedGraph:
@@ -59,11 +60,11 @@ def dijkstra(graph, source, k):
 
     relax_count = {node: 0 for node in graph.graph}
 
-    priority_queue = [(0, source)]
+    # Use heapq for the priority queue
+    priority_queue = [(0, source)]  # (distance, node)
 
     while priority_queue:
-        priority_queue.sort(key=lambda x: x[0])
-        current_distance, current_node = priority_queue.pop(0)  
+        current_distance, current_node = heapq.heappop(priority_queue)  # Pop the smallest distance node
 
         # Skip if the node has already been relaxed k times
         if relax_count[current_node] >= k:
@@ -77,7 +78,7 @@ def dijkstra(graph, source, k):
             if distance < distances[neighbor]:
                 distances[neighbor] = distance
                 paths[neighbor] = paths[current_node] + [neighbor]
-                priority_queue.append((distance, neighbor))
+                heapq.heappush(priority_queue, (distance, neighbor))  # Push the updated distance and node
 
     return distances, paths
 
@@ -126,19 +127,20 @@ def djikstra_classical(graph_obj, source):
     paths = {node: [] for node in graph_obj.graph}
     paths[source] = [source]
 
-    priority_queue = [(0, source)]
+    # Use heapq for the priority queue
+    priority_queue = [(0, source)]  # (distance, node)
 
     while priority_queue:
-        priority_queue.sort(key=lambda x: x[0])
-        current_distance, current_node = priority_queue.pop(0)
+        current_distance, current_node = heapq.heappop(priority_queue)  # Pop the smallest distance node
 
+        # Iterate over neighbors
         for neighbor in graph_obj.graph[current_node]:
             weight = graph_obj.weight[(current_node, neighbor)]
             distance = current_distance + weight
             if distance < distances[neighbor]:
                 distances[neighbor] = distance
                 paths[neighbor] = paths[current_node] + [neighbor]
-                priority_queue.append((distance, neighbor))
+                heapq.heappush(priority_queue, (distance, neighbor))  # Push the updated distance and node
 
     return distances, paths
 
@@ -308,7 +310,7 @@ plt.show()
 
 # Combined bar chart for accuracy (Graph Sizes)
 graph_sizes = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-edges = [int(0.5 * size * (size - 1)) for size in graph_sizes]
+edges = [int((0.5 * size * (size - 1))/2) for size in graph_sizes]
 
 bellman_accuracies_10, djikstra_accuracies_10 = experiment_accuracy(50, 10, nodes=10, edges=edges[0])
 bellman_accuracies_20, djikstra_accuracies_20 = experiment_accuracy(50, 10, nodes=20, edges=edges[1])
@@ -361,7 +363,7 @@ plt.show()
 
 # Combined bar chart for accuracy (Graph Densities)
 graph_densities = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-edges = [int(density * 20 * (20 - 1)) for density in graph_densities]
+edges = [int((density * 20 * (20 - 1))/2) for density in graph_densities]
 
 bellman_accuracies_density_0_1, djikstra_accuracies_density_0_1 = experiment_accuracy(50, 10, nodes=20, edges=edges[0])
 bellman_accuracies_density_0_2, djikstra_accuracies_density_0_2 = experiment_accuracy(50, 10, nodes=20, edges=edges[1])
@@ -476,31 +478,33 @@ average_times_dijkstra_classical = [
     sum(dijkstra_classical_times_k10) / len(dijkstra_classical_times_k10),
 ]
 
-#plot the results in a line chart
-plt.plot(average_times_bellman_ford, label='Bellman-Ford', color='green')
-plt.plot(average_times_dijkstra, label='Dijkstra', color='blue')
-plt.plot(average_times_bellman_ford_classical, label='Bellman-Ford Classical', color='orange')
-plt.plot(average_times_dijkstra_classical, label='Dijkstra Classical', color='red')
+# Plot the results in a multi-bar bar chart
+x = np.arange(1, 11)  
+bar_width = 0.2
+plt.bar(x - 1.5 * bar_width, average_times_bellman_ford, width=bar_width, label='Bellman-Ford', color='green')
+plt.bar(x - 0.5 * bar_width, average_times_dijkstra, width=bar_width, label='Dijkstra', color='blue')
+plt.bar(x + 0.5 * bar_width, average_times_bellman_ford_classical, width=bar_width, label='Bellman-Ford Classical', color='orange')
+plt.bar(x + 1.5 * bar_width, average_times_dijkstra_classical, width=bar_width, label='Dijkstra Classical', color='red')
+plt.xticks(x, labels=[str(i) for i in x]) 
 plt.xlabel('k')
 plt.ylabel('Time (seconds)')
 plt.title('Performance Comparison of Algorithms for Different k Values')
 plt.legend()
-plt.plot()
 plt.show()
 
 #Test Performance for different graph sizes with density 0.5
 graph_sizes = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-edges = [int(0.5 * size * (size - 1)) for size in graph_sizes]
+edges = [int((0.5 * size * (size - 1))/2) for size in graph_sizes]
 
-bellman_ford_times_10, dijkstra_times_10, bellman_ford_classical_times_10, dijkstra_classical_times_10 = experiment_performance_time(50, 5, nodes=10, edges=edges[0])
-bellman_ford_times_20, dijkstra_times_20, bellman_ford_classical_times_20, dijkstra_classical_times_20 = experiment_performance_time(50, 5, nodes=20, edges=edges[1])
-bellman_ford_times_30, dijkstra_times_30, bellman_ford_classical_times_30, dijkstra_classical_times_30 = experiment_performance_time(50, 5, nodes=30, edges=edges[2])
-bellman_ford_times_40, dijkstra_times_40, bellman_ford_classical_times_40, dijkstra_classical_times_40 = experiment_performance_time(50, 5, nodes=40, edges=edges[3])
-bellman_ford_times_50, dijkstra_times_50, bellman_ford_classical_times_50, dijkstra_classical_times_50 = experiment_performance_time(50, 5, nodes=50, edges=edges[4])
-bellman_ford_times_60, dijkstra_times_60, bellman_ford_classical_times_60, dijkstra_classical_times_60 = experiment_performance_time(50, 5, nodes=60, edges=edges[5])
-bellman_ford_times_70, dijkstra_times_70, bellman_ford_classical_times_70, dijkstra_classical_times_70 = experiment_performance_time(50, 5, nodes=70, edges=edges[6])
-bellman_ford_times_80, dijkstra_times_80, bellman_ford_classical_times_80, dijkstra_classical_times_80 = experiment_performance_time(50, 5, nodes=80, edges=edges[7])
-bellman_ford_times_90, dijkstra_times_90, bellman_ford_classical_times_90, dijkstra_classical_times_90 = experiment_performance_time(50, 5, nodes=90, edges=edges[8])
+bellman_ford_times_10, dijkstra_times_10, bellman_ford_classical_times_10, dijkstra_classical_times_10 = experiment_performance_time(50, 10, nodes=10, edges=edges[0])
+bellman_ford_times_20, dijkstra_times_20, bellman_ford_classical_times_20, dijkstra_classical_times_20 = experiment_performance_time(50, 10, nodes=20, edges=edges[1])
+bellman_ford_times_30, dijkstra_times_30, bellman_ford_classical_times_30, dijkstra_classical_times_30 = experiment_performance_time(50, 10, nodes=30, edges=edges[2])
+bellman_ford_times_40, dijkstra_times_40, bellman_ford_classical_times_40, dijkstra_classical_times_40 = experiment_performance_time(50, 10, nodes=40, edges=edges[3])
+bellman_ford_times_50, dijkstra_times_50, bellman_ford_classical_times_50, dijkstra_classical_times_50 = experiment_performance_time(50, 10, nodes=50, edges=edges[4])
+bellman_ford_times_60, dijkstra_times_60, bellman_ford_classical_times_60, dijkstra_classical_times_60 = experiment_performance_time(50, 10, nodes=60, edges=edges[5])
+bellman_ford_times_70, dijkstra_times_70, bellman_ford_classical_times_70, dijkstra_classical_times_70 = experiment_performance_time(50, 10, nodes=70, edges=edges[6])
+bellman_ford_times_80, dijkstra_times_80, bellman_ford_classical_times_80, dijkstra_classical_times_80 = experiment_performance_time(50, 10, nodes=80, edges=edges[7])
+bellman_ford_times_90, dijkstra_times_90, bellman_ford_classical_times_90, dijkstra_classical_times_90 = experiment_performance_time(50, 10, nodes=90, edges=edges[8])
 bellman_ford_times_100, dijkstra_times_100, bellman_ford_classical_times_100, dijkstra_classical_times_100 = experiment_performance_time(50, 5, nodes=100, edges=edges[9])
 
 average_times_bellman_ford = [
@@ -555,12 +559,13 @@ average_times_dijkstra_classical = [
     sum(dijkstra_classical_times_100) / len(dijkstra_classical_times_100),
 ]
 
-# Plot the results in a line chart
-plt.plot(range(10, 110, 10), average_times_bellman_ford, label='Bellman-Ford', color='green')
-plt.plot(range(10, 110, 10), average_times_dijkstra, label='Dijkstra', color='blue')
-plt.plot(range(10, 110, 10), average_times_bellman_ford_classical, label='Bellman-Ford Classical', color='orange')
-plt.plot(range(10, 110, 10), average_times_dijkstra_classical, label='Dijkstra Classical', color='red')
-plt.xticks(range(10, 110, 10), labels=["10", "20", "30", "40", "50", "60", "70", "80", "90", "100"])
+x = np.arange(len(range(10, 110, 10)))  
+bar_width = 0.2
+plt.bar(x - 1.5 * bar_width, average_times_bellman_ford, width=bar_width, label='Bellman-Ford', color='green')
+plt.bar(x - 0.5 * bar_width, average_times_dijkstra, width=bar_width, label='Dijkstra', color='blue')
+plt.bar(x + 0.5 * bar_width, average_times_bellman_ford_classical, width=bar_width, label='Bellman-Ford Classical', color='orange')
+plt.bar(x + 1.5 * bar_width, average_times_dijkstra_classical, width=bar_width, label='Dijkstra Classical', color='red')
+plt.xticks(x, labels=["10", "20", "30", "40", "50", "60", "70", "80", "90", "100"])  # Set x-axis ticks to graph sizes
 plt.xlabel('Graph Size (V)')
 plt.ylabel('Time (seconds)')
 plt.title('Performance Comparison of Algorithms for Different Graph Sizes')
@@ -569,18 +574,18 @@ plt.show()
 
 #Test Performance for different graph densities with size 20
 graph_densities = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-edges = [int(density * 20 * (20 - 1)) for density in graph_densities]
+edges = [int((density * 20 * (20 - 1))/2) for density in graph_densities]
 
-bellman_ford_time_0_1, dijkstra_time_0_1, bellman_ford_classical_time_0_1, dijkstra_classical_time_0_1 = experiment_performance_time(50, 5, nodes=20, edges=edges[0])
-bellman_ford_time_0_2, dijkstra_time_0_2, bellman_ford_classical_time_0_2, dijkstra_classical_time_0_2 = experiment_performance_time(50, 5, nodes=20, edges=edges[1])
-bellman_ford_time_0_3, dijkstra_time_0_3, bellman_ford_classical_time_0_3, dijkstra_classical_time_0_3 = experiment_performance_time(50, 5, nodes=20, edges=edges[2])
-bellman_ford_time_0_4, dijkstra_time_0_4, bellman_ford_classical_time_0_4, dijkstra_classical_time_0_4 = experiment_performance_time(50, 5, nodes=20, edges=edges[3])
-bellman_ford_time_0_5, dijkstra_time_0_5, bellman_ford_classical_time_0_5, dijkstra_classical_time_0_5 = experiment_performance_time(50, 5, nodes=20, edges=edges[4])
-bellman_ford_time_0_6, dijkstra_time_0_6, bellman_ford_classical_time_0_6, dijkstra_classical_time_0_6 = experiment_performance_time(50, 5, nodes=20, edges=edges[5])
-bellman_ford_time_0_7, dijkstra_time_0_7, bellman_ford_classical_time_0_7, dijkstra_classical_time_0_7 = experiment_performance_time(50, 5, nodes=20, edges=edges[6])
-bellman_ford_time_0_8, dijkstra_time_0_8, bellman_ford_classical_time_0_8, dijkstra_classical_time_0_8 = experiment_performance_time(50, 5, nodes=20, edges=edges[7])
-bellman_ford_time_0_9, dijkstra_time_0_9, bellman_ford_classical_time_0_9, dijkstra_classical_time_0_9 = experiment_performance_time(50, 5, nodes=20, edges=edges[8])
-bellman_ford_time_1_0, dijkstra_time_1_0, bellman_ford_classical_time_1_0, dijkstra_classical_time_1_0 = experiment_performance_time(50, 5, nodes=20, edges=edges[9])
+bellman_ford_time_0_1, dijkstra_time_0_1, bellman_ford_classical_time_0_1, dijkstra_classical_time_0_1 = experiment_performance_time(50, 10, nodes=20, edges=edges[0])
+bellman_ford_time_0_2, dijkstra_time_0_2, bellman_ford_classical_time_0_2, dijkstra_classical_time_0_2 = experiment_performance_time(50, 10, nodes=20, edges=edges[1])
+bellman_ford_time_0_3, dijkstra_time_0_3, bellman_ford_classical_time_0_3, dijkstra_classical_time_0_3 = experiment_performance_time(50, 10, nodes=20, edges=edges[2])
+bellman_ford_time_0_4, dijkstra_time_0_4, bellman_ford_classical_time_0_4, dijkstra_classical_time_0_4 = experiment_performance_time(50, 10, nodes=20, edges=edges[3])
+bellman_ford_time_0_5, dijkstra_time_0_5, bellman_ford_classical_time_0_5, dijkstra_classical_time_0_5 = experiment_performance_time(50, 10, nodes=20, edges=edges[4])
+bellman_ford_time_0_6, dijkstra_time_0_6, bellman_ford_classical_time_0_6, dijkstra_classical_time_0_6 = experiment_performance_time(50, 10, nodes=20, edges=edges[5])
+bellman_ford_time_0_7, dijkstra_time_0_7, bellman_ford_classical_time_0_7, dijkstra_classical_time_0_7 = experiment_performance_time(50, 10, nodes=20, edges=edges[6])
+bellman_ford_time_0_8, dijkstra_time_0_8, bellman_ford_classical_time_0_8, dijkstra_classical_time_0_8 = experiment_performance_time(50, 10, nodes=20, edges=edges[7])
+bellman_ford_time_0_9, dijkstra_time_0_9, bellman_ford_classical_time_0_9, dijkstra_classical_time_0_9 = experiment_performance_time(50, 10, nodes=20, edges=edges[8])
+bellman_ford_time_1_0, dijkstra_time_1_0, bellman_ford_classical_time_1_0, dijkstra_classical_time_1_0 = experiment_performance_time(50, 10, nodes=20, edges=edges[9])
 
 average_times_bellman_ford = [
     sum(bellman_ford_time_0_1) / len(bellman_ford_time_0_1),
@@ -634,12 +639,14 @@ average_times_dijkstra_classical = [
     sum(dijkstra_classical_time_1_0) / len(dijkstra_classical_time_1_0),
 ]
 
-# Plot the results in a line chart
-plt.plot(graph_densities, average_times_bellman_ford, label='Bellman-Ford', color='green')
-plt.plot(graph_densities, average_times_dijkstra, label='Dijkstra', color='blue')
-plt.plot(graph_densities, average_times_bellman_ford_classical, label='Bellman-Ford Classical', color='orange')
-plt.plot(graph_densities, average_times_dijkstra_classical, label='Dijkstra Classical', color='red')
-plt.xticks(graph_densities, labels=["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"])
+# Plot the results in a multi-bar bar chart
+x = np.arange(len(graph_densities)) 
+bar_width = 0.2
+plt.bar(x - 1.5 * bar_width, average_times_bellman_ford, width=bar_width, label='Bellman-Ford', color='green')
+plt.bar(x - 0.5 * bar_width, average_times_dijkstra, width=bar_width, label='Dijkstra', color='blue')
+plt.bar(x + 0.5 * bar_width, average_times_bellman_ford_classical, width=bar_width, label='Bellman-Ford Classical', color='orange')
+plt.bar(x + 1.5 * bar_width, average_times_dijkstra_classical, width=bar_width, label='Dijkstra Classical', color='red')
+plt.xticks(x, labels=["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"])  # Set x-axis ticks to densities
 plt.xlabel('Graph Density')
 plt.ylabel('Time (seconds)')
 plt.title('Performance Comparison of Algorithms for Different Graph Densities')
@@ -727,10 +734,13 @@ plt.legend()
 plt.show()
 
 #experiment for different graph sizes with density 0.5
+graph_sizes = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+edges = [int((0.5 * size * (size - 1))/2) for size in graph_sizes]
+
 bellman_ford_memory_10, dijkstra_memory_10, bellman_ford_classical_memory_10, dijkstra_classical_memory_10 = experiment_performance_memory(50, 10, nodes=10, edges=edges[0])
-bellman_ford_memory_20, dijkstra_memory_20, bellman_ford_classical_memory_20, dijkstra_classical_memory_20 = experiment_performance_memory(50, 10, nodes=20, edges=edges[1])
-bellman_ford_memory_30, dijkstra_memory_30, bellman_ford_classical_memory_30, dijkstra_classical_memory_30 = experiment_performance_memory(50, 10, nodes=30, edges=edges[2])
-bellman_ford_memory_40, dijkstra_memory_40, bellman_ford_classical_memory_40, dijkstra_classical_memory_40 = experiment_performance_memory(50, 10, nodes=40, edges=edges[3])
+bellman_ford_memory_20, dijkstra_memory_20, bellman_ford_classical_memory_20, dijkstra_classical_memory_20 = experiment_performance_memory(50, 10, nodes=20, edges=edges[0])
+bellman_ford_memory_30, dijkstra_memory_30, bellman_ford_classical_memory_30, dijkstra_classical_memory_30 = experiment_performance_memory(50, 10, nodes=30, edges=edges[0])
+bellman_ford_memory_40, dijkstra_memory_40, bellman_ford_classical_memory_40, dijkstra_classical_memory_40 = experiment_performance_memory(50, 10, nodes=40, edges=edges[0])
 bellman_ford_memory_50, dijkstra_memory_50, bellman_ford_classical_memory_50, dijkstra_classical_memory_50 = experiment_performance_memory(50, 10, nodes=50, edges=edges[4])
 bellman_ford_memory_60, dijkstra_memory_60, bellman_ford_classical_memory_60, dijkstra_classical_memory_60 = experiment_performance_memory(50, 10, nodes=60, edges=edges[5])
 bellman_ford_memory_70, dijkstra_memory_70, bellman_ford_classical_memory_70, dijkstra_classical_memory_70 = experiment_performance_memory(50, 10, nodes=70, edges=edges[6])
@@ -800,11 +810,14 @@ plt.bar(x + 1.5 * bar_width, dijkstra_classical_memory_average, width=bar_width,
 plt.xticks(x, labels=[str(i) for i in x])
 plt.xlabel('k')
 plt.ylabel('Memory Usage (bytes)')
-plt.title('Memory Usage Comparison of Algorithms for Different k Values')
+plt.title('Memory Usage Comparison of Algorithms for Different Graph Sizes')
 plt.legend()
 plt.show()
 
 #Experiment for different graph densities with size 20
+graph_densities = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+edges = [int((density * 20 * (20 - 1))/2) for density in graph_densities]
+
 bellman_ford_memory_0_1, dijkstra_memory_0_1, bellman_ford_classical_memory_0_1, dijkstra_classical_memory_0_1 = experiment_performance_memory(50, 20, nodes=20, edges=edges[0])
 bellman_ford_memory_0_2, dijkstra_memory_0_2, bellman_ford_classical_memory_0_2, dijkstra_classical_memory_0_2 = experiment_performance_memory(50, 20, nodes=20, edges=edges[1])
 bellman_ford_memory_0_3, dijkstra_memory_0_3, bellman_ford_classical_memory_0_3, dijkstra_classical_memory_0_3 = experiment_performance_memory(50, 20, nodes=20, edges=edges[2])
@@ -869,7 +882,7 @@ dijkstra_classical_memory_average = [
 ]
 
 # Plot the results in a bar chart
-x = np.arange(len(graph_densities))  # Graph densities (0.1, 0.2, ..., 1.0)
+x = np.arange(len(graph_densities))
 bar_width = 0.2
 
 plt.bar(x - 1.5 * bar_width, bellman_ford_memory_average, width=bar_width, label='Bellman-Ford', color='green')
@@ -877,7 +890,7 @@ plt.bar(x - 0.5 * bar_width, dijkstra_memory_average, width=bar_width, label='Di
 plt.bar(x + 0.5 * bar_width, bellman_ford_classical_memory_average, width=bar_width, label='Bellman-Ford Classical', color='orange')
 plt.bar(x + 1.5 * bar_width, dijkstra_classical_memory_average, width=bar_width, label='Dijkstra Classical', color='red')
 
-plt.xticks(x, labels=[str(d) for d in graph_densities])  # Set x-axis ticks to densities
+plt.xticks(x, labels=[str(d) for d in graph_densities])  
 plt.xlabel('Graph Density')
 plt.ylabel('Memory Usage (bytes)')
 plt.title('Memory Usage Comparison of Algorithms for Different Graph Densities')

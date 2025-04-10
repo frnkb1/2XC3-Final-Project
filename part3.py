@@ -1,4 +1,5 @@
 import numpy as np
+import heapq
 
 ## Weighted Graph Class
 class WeightedGraph:
@@ -67,19 +68,20 @@ def djikstra_classical(graph_obj, source):
     paths = {node: [] for node in graph_obj.graph}
     paths[source] = [source]
 
-    priority_queue = [(0, source)]
+    # Use heapq for the priority queue
+    priority_queue = [(0, source)]  # (distance, node)
 
     while priority_queue:
-        priority_queue.sort(key=lambda x: x[0])
-        current_distance, current_node = priority_queue.pop(0)
+        current_distance, current_node = heapq.heappop(priority_queue)  # Pop the smallest distance node
 
+        # Iterate over neighbors
         for neighbor in graph_obj.graph[current_node]:
             weight = graph_obj.weight[(current_node, neighbor)]
             distance = current_distance + weight
             if distance < distances[neighbor]:
                 distances[neighbor] = distance
                 paths[neighbor] = paths[current_node] + [neighbor]
-                priority_queue.append((distance, neighbor))
+                heapq.heappush(priority_queue, (distance, neighbor))  # Push the updated distance and node
 
     return distances, paths
 
