@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.3.6)  9 APR 2025 22:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.3.6)  9 APR 2025 22:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -324,8 +324,7 @@ Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count310
 \l__pdf_internal_box=\box60
-)
-No file main.aux.
+) (./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
@@ -346,6 +345,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -404,6 +404,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring OFF on input line 17.
+ (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
@@ -415,8 +416,7 @@ LaTeX Warning: No \author given.
 
 [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-No file main.toc.
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./main.toc)
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
@@ -432,10 +432,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 48--49
 [3]
 
 [4{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-
-LaTeX Warning: Reference `fig:Figure 1' on page 5 undefined on input line 99.
-
-<Figures/Accuracy_kvals.png, id=26, 462.528pt x 346.896pt>
+<Figures/Accuracy_kvals.png, id=52, 462.528pt x 346.896pt>
 File: Figures/Accuracy_kvals.png Graphic file (type png)
 <use Figures/Accuracy_kvals.png>
 Package pdftex.def Info: Figures/Accuracy_kvals.png  used on input line 104.
@@ -448,20 +445,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 109--117
  []
 
 
-LaTeX Warning: Reference `fig:Figure 2' on page 6 undefined on input line 118.
-
-
-LaTeX Warning: Reference `fig:Figure 3' on page 6 undefined on input line 118.
-
-
 
 [6 <./Figures/Accuracy_kvals.png>]
-<Figures/Accuracy_sizes.png, id=40, 462.528pt x 346.896pt>
+<Figures/Accuracy_sizes.png, id=68, 462.528pt x 346.896pt>
 File: Figures/Accuracy_sizes.png Graphic file (type png)
 <use Figures/Accuracy_sizes.png>
 Package pdftex.def Info: Figures/Accuracy_sizes.png  used on input line 122.
 (pdftex.def)             Requested size: 301.00192pt x 225.76025pt.
-<Figures/Accuracies_densities.png, id=41, 462.528pt x 346.896pt>
+<Figures/Accuracies_densities.png, id=69, 462.528pt x 346.896pt>
 File: Figures/Accuracies_densities.png Graphic file (type png)
 <use Figures/Accuracies_densities.png>
 Package pdftex.def Info: Figures/Accuracies_densities.png  used on input line 129.
@@ -470,41 +461,24 @@ Package pdftex.def Info: Figures/Accuracies_densities.png  used on input line 12
 
 [7 <./Figures/Accuracy_sizes.png> <./Figures/Accuracies_densities.png>]
 
-LaTeX Warning: Reference `fig:Figure 2' on page 8 undefined on input line 145.
-
-
-LaTeX Warning: Reference `fig:Figure 3' on page 8 undefined on input line 145.
-
-
-
 [8]
-
-LaTeX Warning: Reference `fig:Figure 4' on page 9 undefined on input line 160.
-
-<Figures/Performance_kvals.png, id=56, 462.528pt x 346.896pt>
+<Figures/Performance_kvals.png, id=87, 462.528pt x 346.896pt>
 File: Figures/Performance_kvals.png Graphic file (type png)
 <use Figures/Performance_kvals.png>
 Package pdftex.def Info: Figures/Performance_kvals.png  used on input line 163.
 (pdftex.def)             Requested size: 301.00192pt x 225.76025pt.
 
-LaTeX Warning: Reference `fig:Figure 5' on page 9 undefined on input line 177.
-
-
 
 [9 <./Figures/Performance_kvals.png>]
-<Figures/Performance_sizes.png, id=63, 462.528pt x 346.896pt>
+<Figures/Performance_sizes.png, id=95, 462.528pt x 346.896pt>
 File: Figures/Performance_sizes.png Graphic file (type png)
 <use Figures/Performance_sizes.png>
 Package pdftex.def Info: Figures/Performance_sizes.png  used on input line 181.
 (pdftex.def)             Requested size: 301.00192pt x 225.76025pt.
 
 
-LaTeX Warning: Reference `fig:Figure 6' on page 10 undefined on input line 197.
-
-
-
 [10 <./Figures/Performance_sizes.png>]
-<Figures/Performance_densities.png, id=70, 462.528pt x 346.896pt>
+<Figures/Performance_densities.png, id=103, 462.528pt x 346.896pt>
 File: Figures/Performance_densities.png Graphic file (type png)
 <use Figures/Performance_densities.png>
 Package pdftex.def Info: Figures/Performance_densities.png  used on input line 201.
@@ -512,10 +486,7 @@ Package pdftex.def Info: Figures/Performance_densities.png  used on input line 2
 
 
 [11 <./Figures/Performance_densities.png>]
-
-LaTeX Warning: Reference `fig:Figure 7' on page 12 undefined on input line 226.
-
-<Figures/Memory_kvals.png, id=77, 462.528pt x 346.896pt>
+<Figures/Memory_kvals.png, id=111, 462.528pt x 346.896pt>
 File: Figures/Memory_kvals.png Graphic file (type png)
 <use Figures/Memory_kvals.png>
 Package pdftex.def Info: Figures/Memory_kvals.png  used on input line 230.
@@ -524,24 +495,16 @@ Package pdftex.def Info: Figures/Memory_kvals.png  used on input line 230.
 
 [12]
 
-LaTeX Warning: Reference `fig:Figure 8' on page 13 undefined on input line 247.
-
-
-
 [13 <./Figures/Memory_kvals.png>]
-<Figures/Memory_sizes.png, id=89, 462.528pt x 346.896pt>
+<Figures/Memory_sizes.png, id=124, 462.528pt x 346.896pt>
 File: Figures/Memory_sizes.png Graphic file (type png)
 <use Figures/Memory_sizes.png>
 Package pdftex.def Info: Figures/Memory_sizes.png  used on input line 251.
 (pdftex.def)             Requested size: 344.005pt x 258.01701pt.
 
 
-LaTeX Warning: Reference `fig:Figure 9' on page 14 undefined on input line 266.
-
-
-
 [14 <./Figures/Memory_sizes.png>]
-<Figures/Memory_densities.png, id=96, 462.528pt x 346.896pt>
+<Figures/Memory_densities.png, id=132, 462.528pt x 346.896pt>
 File: Figures/Memory_densities.png Graphic file (type png)
 <use Figures/Memory_densities.png>
 Package pdftex.def Info: Figures/Memory_densities.png  used on input line 270.
@@ -555,135 +518,57 @@ Package pdftex.def Info: Figures/Memory_densities.png  used on input line 270.
 [17]
 
 [18]
-
-LaTeX Warning: File `part5_graph1.png' not found on input line 350.
-
-
-/Users/peterwu/Documents/2XC3-Final-Project/main.tex:350: Package pdftex.def Error: File `part5_graph1.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.350 ...phics[width=\textwidth]{part5_graph1.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
+<part5_graph1.png, id=152, 462.528pt x 346.896pt>
+File: part5_graph1.png Graphic file (type png)
+<use part5_graph1.png>
+Package pdftex.def Info: part5_graph1.png  used on input line 350.
+(pdftex.def)             Requested size: 430.00462pt x 322.51994pt.
 
 
 [19]
 
-[20]
-
-LaTeX Warning: File `part5_graph2.png' not found on input line 360.
-
-
-/Users/peterwu/Documents/2XC3-Final-Project/main.tex:360: Package pdftex.def Error: File `part5_graph2.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.360 ...phics[width=\textwidth]{part5_graph2.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-LaTeX Warning: File `part5_graph3.png' not found on input line 366.
+[20 <./part5_graph1.png>]
+<part5_graph2.png, id=165, 1235.817pt x 433.62pt>
+File: part5_graph2.png Graphic file (type png)
+<use part5_graph2.png>
+Package pdftex.def Info: part5_graph2.png  used on input line 360.
+(pdftex.def)             Requested size: 430.00462pt x 150.87604pt.
+<part5_graph3.png, id=166, 1235.817pt x 433.62pt>
+File: part5_graph3.png Graphic file (type png)
+<use part5_graph3.png>
+Package pdftex.def Info: part5_graph3.png  used on input line 366.
+(pdftex.def)             Requested size: 430.00462pt x 150.87604pt.
+<part5_graph4.png, id=167, 1235.817pt x 433.62pt>
+File: part5_graph4.png Graphic file (type png)
+<use part5_graph4.png>
+Package pdftex.def Info: part5_graph4.png  used on input line 375.
+(pdftex.def)             Requested size: 430.00462pt x 150.87604pt.
 
 
-/Users/peterwu/Documents/2XC3-Final-Project/main.tex:366: Package pdftex.def Error: File `part5_graph3.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.366 ...phics[width=\textwidth]{part5_graph3.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-
-[21]
-
-LaTeX Warning: File `part5_graph4.png' not found on input line 375.
+[21 <./part5_graph2.png> <./part5_graph3.png>]
+<part5_graph5.png, id=176, 1235.817pt x 433.62pt>
+File: part5_graph5.png Graphic file (type png)
+<use part5_graph5.png>
+Package pdftex.def Info: part5_graph5.png  used on input line 381.
+(pdftex.def)             Requested size: 430.00462pt x 150.87604pt.
+<part5_graph6.png, id=177, 722.7pt x 433.62pt>
+File: part5_graph6.png Graphic file (type png)
+<use part5_graph6.png>
+Package pdftex.def Info: part5_graph6.png  used on input line 392.
+(pdftex.def)             Requested size: 430.00462pt x 258.0038pt.
 
 
-/Users/peterwu/Documents/2XC3-Final-Project/main.tex:375: Package pdftex.def Error: File `part5_graph4.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.375 ...phics[width=\textwidth]{part5_graph4.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+[22 <./part5_graph4.png> <./part5_graph5.png>]
+<part5_graph7.png, id=186, 722.7pt x 433.62pt>
+File: part5_graph7.png Graphic file (type png)
+<use part5_graph7.png>
+Package pdftex.def Info: part5_graph7.png  used on input line 400.
+(pdftex.def)             Requested size: 430.00462pt x 258.0038pt.
 
 
+[23 <./part5_graph6.png>]
 
-[22]
-
-LaTeX Warning: File `part5_graph5.png' not found on input line 381.
-
-
-/Users/peterwu/Documents/2XC3-Final-Project/main.tex:381: Package pdftex.def Error: File `part5_graph5.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.381 ...phics[width=\textwidth]{part5_graph5.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-
-[23]
-
-LaTeX Warning: File `part5_graph6.png' not found on input line 392.
-
-
-/Users/peterwu/Documents/2XC3-Final-Project/main.tex:392: Package pdftex.def Error: File `part5_graph6.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.392 ...phics[width=\textwidth]{part5_graph6.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-
-[24]
-
-LaTeX Warning: File `part5_graph7.png' not found on input line 400.
-
-
-/Users/peterwu/Documents/2XC3-Final-Project/main.tex:400: Package pdftex.def Error: File `part5_graph7.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.400 ...phics[width=\textwidth]{part5_graph7.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-
-[25]
-
-[26]
-
-[27] (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
+[24 <./part5_graph7.png>] (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 431.
@@ -694,42 +579,29 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 431.
 
 
-[28]
+[25]
 
-[29] (./main.aux)
+[26] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  2340A155BA7315A8AAB68097B2247A69;1381.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 2340A155BA7315A8AAB68097B2247A69;1381.
  ) 
 Here is how much of TeX's memory you used:
- 14233 strings out of 473201
- 224969 string characters out of 5716121
- 806291 words of memory out of 5000000
- 37289 multiletter control sequences out of 15000+600000
- 565094 words of font info for 58 fonts, out of 8000000 for 9000
+ 14080 strings out of 473201
+ 220707 string characters out of 5716121
+ 807645 words of memory out of 5000000
+ 37132 multiletter control sequences out of 15000+600000
+ 564926 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,7n,79p,757b,1584s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (29 pages, 378143 bytes).
+ 75i,7n,79p,757b,1581s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on main.pdf (26 pages, 728630 bytes).
 PDF statistics:
- 244 PDF objects out of 1000 (max. 8388607)
- 171 compressed objects within 2 object streams
- 56 named destinations out of 1000 (max. 500000)
- 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 276 PDF objects out of 1000 (max. 8388607)
+ 194 compressed objects within 2 object streams
+ 53 named destinations out of 1000 (max. 500000)
+ 129 words of extra memory for PDF output out of 10000 (max. 10000000)
 
