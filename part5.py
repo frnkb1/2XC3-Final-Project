@@ -205,25 +205,26 @@ def count_lines_used_from_csv(csv_file, path):
     return used_lines
 
 def experiment():
-    
+    # Data initialization
     connections_csv = 'london_connections.csv'
     stations_csv = 'london_stations.csv'
 
     stations_data = get_stations_data(stations_csv)
     london_subway_graph = Graph(1000)
-
+    # Graph construction
     add_edges_from_csv(graph=london_subway_graph, connections_csv_filename= connections_csv, stations_data=stations_data)
 
     heuristic_for_all_goal = {}
-    
+    # Precompute heuristics for all possible destinations
     for key in stations_data:
         heuristic_for_all_goal[key]= heuristic(stations_data, key)
-
+    # Timing arrays
     a_star_run_array = []
     a_star_each_run_arry = []
     dijkstra_run_array = []
     dijkstra_each_run_arry  = []
 
+    # A* timing block
     A_star_start = timeit.default_timer()
     for src in stations_data:
         for dst in stations_data:
@@ -236,6 +237,7 @@ def experiment():
     A_star_end = timeit.default_timer()
     a_star_run_array.append(timeit.default_timer() -  A_star_start)
 
+    # Dijkstra timing block
     dijkstra_start = timeit.default_timer()
     for src in stations_data:
         for dst in stations_data:
@@ -251,7 +253,7 @@ def experiment():
     print("A* sum time:", A_star_end - A_star_start)
     print("Dijkstra's sum time:", dijkstra_end - dijkstra_start)
 
-    
+    # Plotting cumulative performance
     plt.plot(a_star_run_array, label='A_star')
     plt.plot(dijkstra_run_array, label="Dijkstra's")
     plt.xlabel('Number of Paths Calculated')
@@ -401,6 +403,6 @@ def extra_experiment():
 
 
 experiment()
-extra_experiment()
+#extra_experiment()
 
 
