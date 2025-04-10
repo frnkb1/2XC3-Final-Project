@@ -3,6 +3,7 @@ import math
 import csv
 import pandas as pd
 import timeit 
+import random
 import matplotlib.pyplot as plt
 
 """The Graph class (Directed Version)"""
@@ -163,7 +164,45 @@ def heuristic(stations_data, goal):
         h[sid] = euclidean_distance(lon1=goal_longitude, lat1=goal_latitude, lon2=values[1], lat2=values[0])
     return h
 
+from collections import defaultdict
+import csv
 
+def count_lines_used_from_csv(csv_file, path):
+    # Build the line_to_stations mapping from the CSV file
+    line_to_stations = defaultdict(set)
+    with open(csv_file, mode='r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            station1 = int(row['station1'])
+            station2 = int(row['station2'])
+            line = int(row['line'])
+            if station1 not in line_to_stations[line]:
+                line_to_stations[line].add(station1)
+            if station2 not in line_to_stations[line]:
+                line_to_stations[line].add(station2)
+
+    # Count the number of lines used by the path
+    if not path:
+        return 0
+    used_lines = 0
+    current_line = None
+    for i in range(len(path)):
+        station = path[i]
+        if current_line is None:
+            # First station, pick any line it belongs to
+            for line, stations in line_to_stations.items():
+                if station in stations:
+                    current_line = line
+                    used_lines += 1
+                    break
+        elif station not in line_to_stations[current_line]:
+            # Find a new line that includes this station
+            for line, stations in line_to_stations.items():
+                if station in stations:
+                    current_line = line
+                    used_lines += 1
+                    break
+    return used_lines
 
 def experiment():
     
@@ -237,7 +276,131 @@ def experiment():
     # Display the plot
     plt.show()
     
+    a_star_random_run = {}
+    dijkstra_random_run = {}
 
+    for _ in range(100):
+        u = random.randint(0, 303)
+        v = random.randint(0, 303)
+
+        if u in stations_data and v in stations_data:
+            if (u, v) not in a_star_random_run and (v, u) not in dijkstra_random_run:
+
+                # A* timing
+                A_star_start = timeit.default_timer()
+                a = A_star(graph=london_subway_graph, source=u, destination=v, heuristic=heuristic_for_all_goal[v])
+                A_star_end = timeit.default_timer()
+                a_star_random_run[(u, v)] = A_star_end - A_star_start
+
+                # Dijkstra timing
+                dijkstra_start = timeit.default_timer()
+                b = dijkstra(graph=london_subway_graph, source=u)
+                dijkstra_end = timeit.default_timer()
+                dijkstra_random_run[(u, v)] = dijkstra_end - dijkstra_start
+    # A* Data
+    x_labels_astar = list(a_star_random_run.keys())
+    y_values_astar = list(a_star_random_run.values())
+
+    # Dijkstra Data
+    x_labels_dijkstra = list(dijkstra_random_run.keys())
+    y_values_dijkstra = list(dijkstra_random_run.values())
+
+    # Plotting
+    plt.figure(figsize=(25, 6))  
+    # Plot A*
+    plt.plot(range(len(x_labels_astar)), y_values_astar, label='A*', linestyle='-', marker='o')
+    # Plot Dijkstra
+    plt.plot(range(len(x_labels_dijkstra)), y_values_dijkstra, label="Dijkstra's", linestyle='-', marker='x')
+    # X-axis labels
+    plt.xticks(ticks=range(len(x_labels_astar)), labels=[f"{u}->{v}" for u, v in x_labels_astar], rotation=90)
+    # Labels and title
+    plt.xlabel('Source → Destination')
+    plt.ylabel('Time (seconds)')
+    plt.title("A* vs Dijkstra's Runtime on Random Pairs")
+    plt.legend()
+    plt.tight_layout()  
+    plt.show()
+
+
+    # A_star_start = timeit.default_timer()
+    # a = A_star(graph=london_subway_graph, source=152, destination=243, heuristic=heuristic_for_all_goal[243])
+    # A_star_end = timeit.default_timer()
+    # print(A_star_end - A_star_start)
+
+    # # Dijkstra timing
+    # dijkstra_start = timeit.default_timer()
+    # b = dijkstra(graph=london_subway_graph, source=152)
+    # dijkstra_end = timeit.default_timer()
+    # print(dijkstra_end - dijkstra_start)
+
+
+
+def extra_experiment():
+    connections_csv = 'london_connections.csv'
+    stations_csv = 'london_stations.csv'
+
+    stations_data = get_stations_data(stations_csv)
+    london_subway_graph = Graph(1000)
+
+    add_edges_from_csv(graph=london_subway_graph, connections_csv_filename= connections_csv, stations_data=stations_data)
+
+    heuristic_for_all_goal = {}
+    
+    for key in stations_data:
+        heuristic_for_all_goal[key]= heuristic(stations_data, key)
+    
+    one_line_a = []
+    two_line_a = []
+    more_than_two_a = []
+    one_line_d = []
+    two_line_d = []
+    more_than_two_d = []
+
+    while len(one_line_a)!= 50 or len(two_line_a) != 50 or len(more_than_two_a) != 50:
+        u = random.randint(0, 303)
+        v = random.randint(0, 303)
+
+        if u in stations_data and v in stations_data:
+            A_star_start = timeit.default_timer()
+            a = A_star(graph=london_subway_graph, source=u, destination=v, heuristic=heuristic_for_all_goal[v])
+            A_star_end = timeit.default_timer()
+
+            # Dijkstra timing
+            dijkstra_start = timeit.default_timer()
+            b = dijkstra(graph=london_subway_graph, source=u)
+            dijkstra_end = timeit.default_timer()
+
+            num_of_line = count_lines_used_from_csv(connections_csv, a[1])
+            if num_of_line == 1 and len(one_line_a) < 50:
+                one_line_a.append(A_star_end-A_star_start)
+                one_line_d.append(dijkstra_end-dijkstra_start)
+            elif num_of_line == 2 and len(two_line_a) < 50:
+                two_line_a.append(A_star_end-A_star_start)
+                two_line_d.append(dijkstra_end-dijkstra_start)
+            elif num_of_line >=3 and len(more_than_two_a) < 50:
+                more_than_two_a.append(A_star_end-A_star_start)
+                more_than_two_d.append(dijkstra_end-dijkstra_start)
+    
+    plt.figure(figsize=(10, 6))
+
+    # Plot for A* and Dijkstra with distinct colors/linestyles
+    plt.plot(one_line_a, label='A* (Same Line)', color='blue', linestyle='-')
+    plt.plot(two_line_a, label='A* (Adjacent Line)', color='green', linestyle='-')
+    plt.plot(more_than_two_a, label='A* (More Than One Transfer)', color='red', linestyle='-')
+
+    plt.plot(one_line_d, label='Dijkstra (Same Line)', color='cyan', linestyle='--')
+    plt.plot(two_line_d, label='Dijkstra (Adjacent Line)', color='orange', linestyle='--')
+    plt.plot(more_than_two_d, label='Dijkstra (More Than One Transfer)', color='magenta', linestyle='--')
+    # Labels and legend
+    plt.title("A* and Dijkstra Runtime Comparison for Different Path Types")
+    plt.xlabel("Number of Tests")
+    plt.ylabel("Runtime (seconds)")
+    plt.legend()
+    # Show the plot
+    plt.show()
 
 
 experiment()
+extra_experiment()
+
+
