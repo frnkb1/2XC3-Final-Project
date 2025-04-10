@@ -90,6 +90,31 @@ These assignments are not final. Members are encouraged to assist one another, a
 
 \section*{Part 6, Organize code per UML Diagram}
 
+The design principles and patterns being used in this diagram include composition, class inheritance, and adapters. 
+
+HeuristicGraph inherits from WeightedGraph, which inherits from Graph class.
+
+Dijkstras, Bellman\_Ford, and A\_star (which is an adapter class for original A\_star algorithm, another design principle) all inherit from SPAlgorithm.
+
+Finally, ShortPathFinder uses composition (has-a relation) by passing a Graph object and interchangeable SPAlgorithm types into the class to help run. This way we can allow runtime switching of algorithms to whichever may be more efficient for the situation, especially using the set\_algorithm function.
+
+Currently, nodes are represented as only integers which is very limiting in that it cannot represent much information. Thus, a solution could be implementing a custom Node class, where we can define metadata for each node, like name, value, date, or something similar. A sample implementation could be:
+
+\begin{lstlisting}[language=Python]
+class Node:
+    def __init__(self, name: str, value: int, date: int):
+        self.name = name
+        self.value = value
+        self.date = date
+
+    def __repr__(self):
+        return f"Node(name={self.name!r},
+        value={self.value},date={self.date})"
+\end{lstlisting}
+
+Now whenever we need a node, we can pass in this Node object, which contains a lot more data than just a simple integer value.
+
+This means we must change all classes that utilize nodes. We can change adjacency list from \texttt{List[int]} to \texttt{Dict[Node, List[Node]]}, or change weights to use \texttt{Dict[Tuple[Node, Node], float]}. Other sample changes include changing \texttt{add\_node(node: int)} function, to \texttt{add\_node(node: Node)}. And when we need specific values from Node, we can simply call \texttt{Node.name} or \texttt{Node.date}, etc. This would be a much better design for this UML.
 %\section*{List of Figures}
 %\startlist{toc}
 %\printlist{toc}{section}{\textbf{Part 5, werlkwerjoik}}
