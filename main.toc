@@ -1,0 +1,7 @@
+\contentsline {section}{\large \normalfont {Part 1, Team Charter}}{2}{Doc-Start}%
+\contentsline {section}{\large \normalfont {Part 2, Single Source Shortest Path Algorithms }}{2}{Doc-Start}%
+\contentsline {section}{\large \normalfont {Part 3, All-pair Shortest Path Algorithm}}{2}{Doc-Start}%
+\contentsline {section}{\large \normalfont {Part 4, A* Algorithm} }{2}{Doc-Start}%
+\contentsline {section}{\large \normalfont {Part 5, Compare Shortest Path Algorithms}}{2}{Doc-Start}%
+\contentsline {section}{\large \normalfont {Part 6, Organize code per UML Diagram} }{2}{Doc-Start}%
+\contentsfinish 
