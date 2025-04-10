@@ -1,7 +1,6 @@
 import heapq
 
 """The Graph class (Directed Version)"""
-
 class Graph:
     def __init__(self, nodes):
         # Adjacency list for outgoing edges only
